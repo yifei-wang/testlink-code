@@ -40,8 +40,8 @@ if ($file['size'] > $maxSize) {
     exit;
 }
 
-// Determine upload directory
-$uploadDir = '/var/testlink/upload_area/ckeditor_images/';
+// Determine upload directory - use separate directory for paste uploads
+$uploadDir = '/var/testlink/upload_area/ckeditor_images/paste/';
 
 // Check parent directory exists
 $parentDir = '/var/testlink/upload_area/';
@@ -76,8 +76,8 @@ $baseName = 'ckeditor_' . time() . '_' . substr(md5(uniqid()), 0, 8);
 $fileName = $baseName . '.' . $fileExt;
 
 // Generate web-accessible path - absolute path from web root
-// The upload_area is accessible via symlink /var/www/html/upload_area
-$webPath = '/upload_area/ckeditor_images/' . $fileName;
+// The upload_area is accessible via Alias /upload_area
+$webPath = '/upload_area/ckeditor_images/paste/' . $fileName;
 
 // Move uploaded file
 $destination = $uploadDir . $fileName;

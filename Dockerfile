@@ -6,7 +6,9 @@ RUN apt install -y \
   zlib1g-dev \
   libpng-dev \
   libjpeg-dev \
-  libfreetype-dev
+  libfreetype-dev \
+  libzip-dev && \
+  rm -rf /var/lib/apt/lists/*
 
 # Enable Apache modules (rewrite for .htaccess support)
 RUN a2enmod rewrite && \
@@ -15,7 +17,11 @@ RUN a2enmod rewrite && \
 RUN docker-php-ext-install mysqli && \
   docker-php-ext-enable mysqli && \
   docker-php-ext-configure gd --with-freetype --with-jpeg && \
-  docker-php-ext-install gd
+  docker-php-ext-install gd && \
+  docker-php-ext-install fileinfo && \
+  docker-php-ext-install zip && \
+  docker-php-ext-enable fileinfo && \
+  docker-php-ext-enable zip
 RUN apt clean
 
 WORKDIR /var/www/html

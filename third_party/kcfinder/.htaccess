@@ -1,0 +1,11 @@
+# Allow access to KCFinder resources
+Options -Indexes
+
+# Deny access to configuration files for security
+<Files "config.php">
+    Require all denied
+</Files>
+
+<Files "*.swp">
+    Require all denied
+</Files>

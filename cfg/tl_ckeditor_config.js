@@ -72,23 +72,30 @@ CKEDITOR.editorConfig = function( config )
 	];
 	
 	/* Configuration of File Browser
-	   You can use theses definitions if you buy ckfinder
-	   more informations on http://ckfinder.com/
-	   download ckfinder and put into third party folder
+	   KCFinder is integrated for file browsing and image management
+	   Located in third_party/kcfinder
 	*/
-	//config.filebrowserBrowseUrl = '/third_party/ckfinder/ckfinder.html';
-	//config.filebrowserImageBrowseUrl = '/third_party/ckfinder/ckfinder.html?Type=Images';
-	//config.filebrowserFlashBrowseUrl = '/third_party/ckfinder/ckfinder.html?Type=Flash';
-	// uncomment these lines only if you want to allow quick upload
-	//config.filebrowserUploadUrl = '/third_party/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files';
-	//config.filebrowserImageUploadUrl = '/third_party/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images';
-	//config.filebrowserFlashUploadUrl = '/third_party/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash';
+	// Enable KCFinder for image browsing
+	var kcfinderPath = fRoot.replace(/\/+$/, '') + '/third_party/kcfinder';
+	config.filebrowserBrowseUrl = kcfinderPath + '/browse.php';
+	config.filebrowserImageBrowseUrl = kcfinderPath + '/browse.php?type=images';
+	config.filebrowserFlashBrowseUrl = kcfinderPath + '/browse.php?type=flash';
+
+	// Enable quick upload via KCFinder
+	config.filebrowserUploadUrl = kcfinderPath + '/upload.php';
+	config.filebrowserImageUploadUrl = kcfinderPath + '/upload.php?type=images';
+	config.filebrowserFlashUploadUrl = kcfinderPath + '/upload.php?type=flash';
 
 	/* Enable Image Upload for Paste Functionality
 	   Allows pasting images directly from clipboard
+	   This works alongside KCFinder for different upload methods
 	*/
-	// Upload URL using upload_area directory
+	// Upload URL using upload_area directory (fallback for paste functionality)
 	// Remove trailing slashes from fRoot to avoid double-slash issues
 	var uploadPath = fRoot.replace(/\/+$/, '') + '/upload_area/ckeditor_upload.php?responseType=json';
 	config.filebrowserImageUploadUrl = uploadPath;
+
+	// Session-based KCFinder configuration
+	// KCFinder will check for session to validate access
+	// See third_party/kcfinder/config.php for detailed settings
 }

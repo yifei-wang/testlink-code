@@ -191,11 +191,15 @@ function doAuthorize(&$db,$login,$pwd,$options=null) {
       $result['msg'] = lang_get('login_msg_session_exists1') . 
                        ' <a style="color:white;" href="logout.php">' . 
                        lang_get('logout_link') . '</a>' . lang_get('login_msg_session_exists2');
-    } else { 
+    } else {
       // Setting user's session information
       $_SESSION['currentUser'] = $user;
       $_SESSION['lastActivity'] = time();
-          
+
+      // Enable KCFinder for file browsing and image upload
+      $_SESSION['KCFINDER'] = array();
+      $_SESSION['KCFINDER']['disabled'] = false;
+
       $g_tlLogger->endTransaction();
       $g_tlLogger->startTransaction();
       setUserSession($db,$user->login, $user->dbID,$user->globalRoleID,$user->emailAddress,$user->locale,null);
@@ -254,11 +258,15 @@ function doSSOClientCertificate(&$dbHandler,$apache_mod_ssl_env,$authCfg=null)
                       lang_get('login_msg_session_exists2');
       }
       else
-      { 
+      {
         // Setting user's session information
         $_SESSION['currentUser'] = $user;
         $_SESSION['lastActivity'] = time();
-          
+
+        // Enable KCFinder for file browsing and image upload
+        $_SESSION['KCFINDER'] = array();
+        $_SESSION['KCFINDER']['disabled'] = false;
+
         $g_tlLogger->endTransaction();
         $g_tlLogger->startTransaction();
         setUserSession($dbHandler,$user->login, $user->dbID,$user->globalRoleID,
