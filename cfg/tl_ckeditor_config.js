@@ -20,7 +20,11 @@ CKEDITOR.editorConfig = function( config )
 	
 	// do not check "Replace actual contents" checkbox as default
 	config.templates_replaceContent = false;
-	
+
+	// Enable CKEditor built-in image paste functionality
+	// Use clipboard plugin's pasteImage capability (CKEditor 4.12+)
+	config.clipboard_handleImages = true;
+
 	// default Toolbar
 	config.toolbar_Testlink = 
 	[
@@ -79,4 +83,12 @@ CKEDITOR.editorConfig = function( config )
 	//config.filebrowserUploadUrl = '/third_party/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files';
 	//config.filebrowserImageUploadUrl = '/third_party/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images';
 	//config.filebrowserFlashUploadUrl = '/third_party/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash';
+
+	/* Enable Image Upload for Paste Functionality
+	   Allows pasting images directly from clipboard
+	*/
+	// Upload URL using upload_area directory
+	// Remove trailing slashes from fRoot to avoid double-slash issues
+	var uploadPath = fRoot.replace(/\/+$/, '') + '/upload_area/ckeditor_upload.php?responseType=json';
+	config.filebrowserImageUploadUrl = uploadPath;
 }
